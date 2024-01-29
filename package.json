@@ -1,0 +1,41 @@
+{
+  "name": "beo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "node --experimental-json-modules scripts/generateDb && nuxt generate",
+    "regenerate": "node --experimental-json-modules scripts/generateDb"
+  },
+  "dependencies": {
+    "@adobe/node-fetch-retry": "^2.2.0",
+    "@nuxt/ufo": "^0.5.4",
+    "@nuxtjs/axios": "^5.13.6",
+    "@types/d3": "^7.4.0",
+    "core-js": "^3.19.3",
+    "d3": "^7.8.2",
+    "express": "^4.18.2",
+    "glob": "^8.0.3",
+    "mapbox-gl": "^2.12.0",
+    "module-alias": "^2.2.2",
+    "node-xlsx": "^0.21.0",
+    "nuxt": "^2.15.8",
+    "nuxt-mapbox-gl": "^1.0.7",
+    "papaparse": "^5.3.2",
+    "parse5": "^7.1.2",
+    "progress": "^2.0.3",
+    "sass": "^1.45.1",
+    "sass-loader": "10.1.1",
+    "tree-parser": "^1.2.4",
+    "ufo": "^1.1.0",
+    "vue": "2.7.14",
+    "vue-server-renderer": "2.7.14",
+    "vue-template-compiler": "2.7.14",
+    "webpack": "^4.46.0"
+  },
+  "_moduleAliases": {
+    "@parsers": "scripts/parsers.js"
+  }
+}
