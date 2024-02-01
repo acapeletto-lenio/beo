@@ -96,30 +96,17 @@ async function parseBonos(key) {
 /* -API datos.gob.ar------------------------------------------------------------------------- */
 
 async function datosGobarAPI(value) {
-  try {
-    const response = await fetch(
-      `https://apis.datos.gob.ar/series/api/series/?limit=5000&format=json&ids=${value}`
-    );
-    const jsonResponse = await response.json();
-
-    if (!response.ok) {
-      console.error(
-        "API Request Failed:",
-        response.status,
-        response.statusText
-      );
-      return null; // or throw an error, depending on your error handling strategy
-    }
-
-    const data = jsonResponse.data;
-    return data.map((item) => ({
-      x: item[0],
-      y: Number(item[1]?.toFixed(2)) || null,
-    }));
-  } catch (error) {
-    console.error("Error fetching or processing data:", error);
-    return null; // or throw the error, depending on your error handling strategy
-  }
+  const data = (
+    await (
+      await fetch(
+        `https://apis.datos.gob.ar/series/api/series/?limit=5000&format=json&ids=${value}`
+      )
+    ).json()
+  ).data;
+  return data.map((item) => ({
+    x: item[0],
+    y: Number(item[1]?.toFixed(2)) || null,
+  }));
 }
 
 /* -CSV datos.gob.ar------------------------------------------------------------------------- */

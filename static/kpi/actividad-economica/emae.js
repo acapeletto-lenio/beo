@@ -1,10 +1,12 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "emae"
- const payload = await parsers.datosGobarAPI('143.3_NO_PR_2004_A_31')
-    /*   a: '11.3_ISOM_2004_M_39',
+  const kpi = "emae";
+  const url =
+    " https://infra.datos.gob.ar/catalog/sspm/dataset/143/distribution/143.3/download/emae-valores-anuales-indice-base-2004-mensual.csv";
+  const payload = await parsers.datosGobarCSV(0, 2, url);
+  //const payload = await parsers.datosGobarAPI('143.3_NO_PR_2004_A_31')
+  /*   a: '11.3_ISOM_2004_M_39',
       b: '11.3_VIPAA_2004_M_5',
       c: '11.3_ISD_2004_M_26',
       d: '11.3_VMASD_2004_M_23',
@@ -19,7 +21,7 @@ module.exports = (async function() {
       m: '11.3_CMMR_2004_M_10',
       n: '11.3_HR_2004_M_24',
       o: '11.3_TAC_2004_M_60',   */
- 
+
   const post = {
     kpi,
     t: "EMAE",
@@ -32,9 +34,9 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/it/dataset/sspm-estimador-mensual-actividad-economica-emae-base-2004/archivo/sspm_143.3",
     fu: "INDEC",
     fur: "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-9-48",
-    frec: parsers.detectDataType(payload), 
+    frec: parsers.detectDataType(payload),
     fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'), 
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador Mensual de Actividad Económica (EMAE) refleja la <strong>evolución mensual de la actividad económica</strong> del conjunto de los sectores productivos a nivel nacional.",
     feat: true,
 
@@ -42,25 +44,21 @@ module.exports = (async function() {
       {
         label: "Desestacionalizado",
         data: payload,
-        
       },
       {
         label: "Tendencia",
-        data: await parsers.datosGobarAPI('143.3_NO_PR_2004_A_28'),
-        color: "#7a49a580",        
+        data: await parsers.datosGobarCSV(0, 3, url),
+        color: "#7a49a580",
         borderWidth: 1,
       },
       {
         label: "Base",
-        data: await parsers.datosGobarAPI('143.3_NO_PR_2004_A_21'),
-        color: "rgba(46,120,210,0.25)",        
+        data: await parsers.datosGobarCSV(0, 1, url),
+        color: "rgba(46,120,210,0.25)",
         borderWidth: 1,
       },
-    ]
-}
+    ],
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
-
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();
