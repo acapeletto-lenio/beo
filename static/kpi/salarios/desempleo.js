@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "desempleo"
-const payload = await parsers.datosGobarAPI('45.2_ECTDT_0_T_33')
+  const kpi = "desempleo";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/45/distribution/45.2/download/tasa-desempleo-valores-trimestrales.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Desempleo",
@@ -14,9 +15,9 @@ const payload = await parsers.datosGobarAPI('45.2_ECTDT_0_T_33')
     fdr: "https://datos.gob.ar/dataset/sspm_45/archivo/sspm_45.2",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     feat: true,
 
@@ -24,48 +25,44 @@ const payload = await parsers.datosGobarAPI('45.2_ECTDT_0_T_33')
       {
         label: "General",
         data: payload,
-        
-        },
-      {  
+      },
+      {
         label: "CABA",
-        data: await parsers.datosGobarAPI('45.2_ECTDTC_0_T_38'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTC_0_T_38"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "Cuyo",
-        data: await parsers.datosGobarAPI('45.2_ECTDTCU_0_T_38'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTCU_0_T_38"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "GBA",
-        data: await parsers.datosGobarAPI('45.2_ECTDTG_0_T_37'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTG_0_T_37"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "Nordeste",
-        data: await parsers.datosGobarAPI('45.2_ECTDTNE_0_T_42'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTNE_0_T_42"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "Noroeste",
-        data: await parsers.datosGobarAPI('45.2_ECTDTNO_0_T_42'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTNO_0_T_42"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "Pampeana",
-        data: await parsers.datosGobarAPI('45.2_ECTDTRP_0_T_49'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTRP_0_T_49"),
         color: "rgba(46,120,210,0.15)",
       },
       {
         label: "Patagonia",
-        data: await parsers.datosGobarAPI('45.2_ECTDTP_0_T_43'),
+        data: await parsers.datosGobarAPI("45.2_ECTDTP_0_T_43"),
         color: "rgba(46,120,210,0.15)",
       },
-]
-}
+    ],
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
-
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();

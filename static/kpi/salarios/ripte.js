@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "ripte"
-const payload = await parsers.datosGobarAPI('158.1_REPTE_0_0_5')
+  const kpi = "ripte";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/158/distribution/158.1/download/remuneracion-imponible-promedio-trabajadores-estables-ripte-total-pais-pesos-serie-mensual.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "RIPTE",
@@ -14,21 +15,18 @@ const payload = await parsers.datosGobarAPI('158.1_REPTE_0_0_5')
     fdr: "https://datos.gob.ar/dataset/sspm-remuneracion-imponible-promedio-trabajadores-estables-ripte/archivo/sspm_158.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     dimensions: [
       {
-        
         label: "RIPTE",
         data: payload,
         color: "rgba(46,120,210,1)",
       },
-    ]
-}
+    ],
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();
