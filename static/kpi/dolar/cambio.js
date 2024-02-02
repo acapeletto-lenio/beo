@@ -60,7 +60,7 @@ module.exports = (async function () {
     }
   }
 
-  payload["turista"] = payload["oficial"].map((d) => ({ ...d, y: d.y * 1.75 }));
+  payload["turista"] = payload["oficial"].map((d) => ({ ...d, y: d.y * 1.65 }));
   payload["qatar"] = payload["oficial"].map((d) => ({ ...d, y: d.y * 2 }));
 
   const post = {
