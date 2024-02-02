@@ -1,9 +1,8 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "polingresos"
-const payload = await parsers.datosGobarAPI('186.1_TOTAL_POLISOS_0_0_23')
+  const kpi = "polingresos";
+  const payload = await parsers.datosGobarAPI("186.1_TOTAL_POLISOS_0_0_23");
 
   const post = {
     kpi,
@@ -15,9 +14,9 @@ const payload = await parsers.datosGobarAPI('186.1_TOTAL_POLISOS_0_0_23')
     fdr: "https:/datos.gob.ar/sv.dataset/sspm-gasto-publico-gobierno-nacional-politica-ingresos/archivo/sspm_1186.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     min: 0,
     dimensions: [
@@ -25,113 +24,94 @@ const payload = await parsers.datosGobarAPI('186.1_TOTAL_POLISOS_0_0_23')
         label: "Total",
         data: payload,
         color: "rgba(46,120,210,1)",
-
       },
       {
         label: "Argentina Trabaja",
-        data: await parsers.datosGobarAPI('186.1_ARGENTINA_AJA_0_0_17 '),
+        data: await parsers.datosGobarAPI("186.1_ARGENTINA_AJA_0_0_17"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Asignaciones",
-        data:  await parsers.datosGobarAPI('186.1_ASIGNACIONRES_0_0_23'),
+        data: await parsers.datosGobarAPI("186.1_ASIGNACIONRES_0_0_23"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "AUH",
-        data: await parsers.datosGobarAPI('186.1_ASIGNACIONIAL_0_0_43'),
+        data: await parsers.datosGobarAPI("186.1_ASIGNACIONIAL_0_0_43"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Becas",
-        data: await parsers.datosGobarAPI('186.1_BECASCAS_0_0_5'),
+        data: await parsers.datosGobarAPI("186.1_BECASCAS_0_0_5"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Familias",
-        data: await parsers.datosGobarAPI('186.1_PLAN_FAMILIAL_0_0_30'),
+        data: await parsers.datosGobarAPI("186.1_PLAN_FAMILIAL_0_0_30"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Jefas y Jefes de Hogar",
-        data: await parsers.datosGobarAPI('186.1_PROGRAMA_JDOS_0_0_38'),
+        data: await parsers.datosGobarAPI("186.1_PROGRAMA_JDOS_0_0_38"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Jovenes Trabajo",
-        data: await parsers.datosGobarAPI('186.1_JOVENES_MAAJO_0_0_25'),
+        data: await parsers.datosGobarAPI("186.1_JOVENES_MAAJO_0_0_25"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Jubilaciones",
-        data: await parsers.datosGobarAPI('186.1_JUBILACIONINO_0_0_53'),
+        data: await parsers.datosGobarAPI("186.1_JUBILACIONINO_0_0_53"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Jubilaciones (no SIPA)",
-        data: await parsers.datosGobarAPI('186.1_JUBILACIONLES_0_0_49'),
+        data: await parsers.datosGobarAPI("186.1_JUBILACIONLES_0_0_49"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Otras",
-        data: await parsers.datosGobarAPI('186.1_OTRAS_POLISOC_0_0_52'),
+        data: await parsers.datosGobarAPI("186.1_OTRAS_POLISOC_0_0_52"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Pensiones",
-        data: await parsers.datosGobarAPI('186.1_PENSIONES_VAS_0_0_26'),
+        data: await parsers.datosGobarAPI("186.1_PENSIONES_VAS_0_0_26"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Progresar",
-        data: await parsers.datosGobarAPI('186.1_PROGRAMA_RINA_0_0_39'),
+        data: await parsers.datosGobarAPI("186.1_PROGRAMA_RINA_0_0_39"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Proyectos Comunitarios",
-        data: await parsers.datosGobarAPI('186.1_PROYECTOS_IOS_0_0_34'),
+        data: await parsers.datosGobarAPI("186.1_PROYECTOS_IOS_0_0_34"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "PUAM",
-        data: await parsers.datosGobarAPI('186.1_PENSION_UNYOR_0_0_30'),
+        data: await parsers.datosGobarAPI("186.1_PENSION_UNYOR_0_0_30"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Seguro Capacitacion",
-        data: await parsers.datosGobarAPI('186.1_SEGURO_CAPLEO_0_0_26'),
+        data: await parsers.datosGobarAPI("186.1_SEGURO_CAPLEO_0_0_26"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Seguro Desempleo",
-        data: await parsers.datosGobarAPI('186.1_SEGURO_DESLEO_0_0_16'),
+        data: await parsers.datosGobarAPI("186.1_SEGURO_DESLEO_0_0_16"),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Seguro Desempleo (otros)",
-        data: await parsers.datosGobarAPI('186.1_SEGURO_DESTRE_0_0_24'),
+        data: await parsers.datosGobarAPI("186.1_SEGURO_DESTRE_0_0_24"),
         color: "rgba(46,120,210,0.25)",
-
       },
-]
-}
+    ],
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-})()
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();

@@ -3,7 +3,7 @@ const glob = require("glob");
 const path = require("path");
 var parsertree = require("tree-parser");
 global.fs = require("fs");
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 function writeFileSyncRecursive(filename, content, charset) {
   const folders = filename.split(path.sep).slice(0, -1);
@@ -229,12 +229,7 @@ async function processItems(arr) {
       "\x1b[0m"
     );
     errors.forEach(({ kpi, error }) => {
-      console.log(
-        "\x1b[41m",
-        "\x1b[37m",
-        `✕ [${kpi}] ${error.code}`,
-        "\x1b[0m"
-      );
+      console.log("\x1b[41m", "\x1b[37m", `✕ [${kpi}] ${error}`, "\x1b[0m");
     });
   } else {
     console.log(
