@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "cvs"
-    const payload = await parsers.datosGobarAPI('447.1_TOTALTAL_0_0_5_37')
+  const kpi = "cvs";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/447/distribution/447.1/download/coeficiente-de-variacion-salarial.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Coeficiente de Variacion Salarial",
@@ -13,24 +14,19 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/sv/dataset/sspm-coeficiente-variacion-salarial-cvs/archivo/sspm_447.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
 
     dimensions: [
-        {
-        
+      {
         label: "Coeficiente de Variacion Salarial",
         data: payload,
         color: "rgba(46,120,210,1)",
-        
-        
-        },
+      },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-   
-
-})()
+})();

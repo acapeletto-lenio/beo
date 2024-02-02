@@ -1,10 +1,10 @@
- 
-module.exports = (async function() {
-  
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "autos"
-  const payload = await parsers.datosGobarAPI('330.1_PRODUCCIONLES__22')
+  const kpi = "autos";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/330/distribution/330.1/download/datos-historicos-industria-automotriz-unidades-anuales.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Producción de Autos",
@@ -15,21 +15,18 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/dataset/sspm-datos-historicos-industria-automotriz/archivo/sspm_330.1",
     fu: "ADEFA",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-    frec: parsers.detectDataType(payload), 
-        fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),    
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     dimensions: [
-        {
-          
-          label: "Producción de Autos",
-          data: payload,
-          color: "rgba(46,120,210,1)",
-        },
-      ],
-  }
+      {
+        label: "Producción de Autos",
+        data: payload,
+        color: "rgba(46,120,210,1)",
+      },
+    ],
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
+})();

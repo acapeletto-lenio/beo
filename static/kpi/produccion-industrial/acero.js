@@ -1,8 +1,10 @@
-module.exports = (async function() {
+module.exports = (async function () {
   const parsers = require("@parsers");
-  const kpi = "acero"
-  const payload = await parsers.datosGobarAPI('359.3_HIERRO_PRITAL__21');
- 
+  const kpi = "acero";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/359/distribution/359.3/download/datos-historicos-de-la-industria-siderurgica-datos-mensulaes.csv";
+  const payload = await parsers.datosGobarCSV(0, 3, url);
+
   const post = {
     kpi,
     t: "Producción de Acero",
@@ -13,21 +15,19 @@ module.exports = (async function() {
     fdr: "https://infra.datos.gob.ar/catalog/sspm/dataset/359/distribution/359.3/download/datos-historicos-de-la-industria-siderurgica-datos-mensulaes.csv",
     fu: "CAA",
     fur: "https://www.acero.org.ar/estadisticas-locales/",
-    frec: parsers.detectDataType(payload), 
-        fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     max: 500,
     dimensions: [
-        {
-          
-          label: "Producción de Acero",
-          data: payload,
-          color: "rgba(46,120,210,1)",
-        },
-      ],
-  }
-  
+      {
+        label: "Producción de Acero",
+        data: payload,
+        color: "rgba(46,120,210,1)",
+      },
+    ],
+  };
+
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-  
-})()
+})();

@@ -1,8 +1,9 @@
-module.exports = (async function() {
-  
+module.exports = (async function () {
   const parsers = require("@parsers");
-  const kpi = "asalariados"
-const payload = await parsers.datosGobarAPI('151.1_AARIADOTAC_2012_M_26')
+  const kpi = "asalariados";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/151/distribution/151.1/download/trabajadores-registrados-modalidad-ocupacional-principal-mensual-total-pais-miles-base-2012.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Asalariados",
@@ -13,25 +14,23 @@ const payload = await parsers.datosGobarAPI('151.1_AARIADOTAC_2012_M_26')
     fdr: "https://datos.gob.ar/dataset/sspm-trabajadores-registrados-segun-modalidad-ocupacional-principal-base-2012/archivo/sspm_151.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'), 
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
 
     dimensions: [
-        {
-    label: "Empleo Privado",
-          data: payload,
-          
-        },
-        {
-    label: "Empleo Publico",
-          data: await parsers.datosGobarAPI('151.1_AARIADODAD_2012_M_31'),
-          color: "rgba(46,120,210,0.25)",
-        },
-      ],
-  }
+      {
+        label: "Empleo Privado",
+        data: payload,
+      },
+      {
+        label: "Empleo Publico",
+        data: await parsers.datosGobarCSV(0, 2, url),
+        color: "rgba(46,120,210,0.25)",
+      },
+    ],
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-})()
+})();

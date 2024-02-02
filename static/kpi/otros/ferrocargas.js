@@ -4,7 +4,7 @@ module.exports = (async function () {
   const kpi = "ferrocargas";
   const url =
     "https://infra.datos.gob.ar/catalog/sspm/dataset/302/distribution/302.3/download/estadistincas-servicios-publicos-insumos.csv";
-  const payload = await parsers.datosGobarAPI(0, 36, url);
+  const payload = await parsers.datosGobarCSV(0, 36, url);
   const post = {
     kpi,
     t: "Cargas Ferrocarril",
