@@ -1,9 +1,10 @@
 module.exports = (async function () {
-
   const parsers = require("@parsers");
 
-  const kpi = "metrosperforados"
-const payload = await parsers.datosGobarAPI('366.3_METROS_PERRAL__31')
+  const kpi = "metrosperforados";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/366/distribution/366.3/download/exportaciones-actividad-saldo-comercial-empresa-exportadora-mensul.csv";
+  const payload = await parsers.datosGobarCSV(0, 10, url);
 
   const post = {
     kpi,
@@ -15,24 +16,17 @@ const payload = await parsers.datosGobarAPI('366.3_METROS_PERRAL__31')
     fdr: "https://datos.gob.ar/ar/dataset/sspm-pozos-petroleo-metros-perforados/archivo/sspm_366.3",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
-     dimensions: [
-        {
-          
-          label: "Pozos de Petroleo terminados",
-          data: payload,
-                    
-          
-        },
-
-      ]
-  }
+    dimensions: [
+      {
+        label: "Pozos de Petroleo terminados",
+        data: payload,
+      },
+    ],
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
-
+})();

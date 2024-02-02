@@ -1,9 +1,10 @@
 module.exports = (async function () {
-
   const parsers = require("@parsers");
 
-  const kpi = "auh"
-const payload = await parsers.datosGobarAPI('188.1_AUH_ASIGNAADO_0_0_48')
+  const kpi = "auh";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/188/distribution/188.1/download/titulares-asignacion-universal-por-hijo.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "AUH Asignaciones",
@@ -15,21 +16,16 @@ const payload = await parsers.datosGobarAPI('188.1_AUH_ASIGNAADO_0_0_48')
     fdr: "https://datos.gob.ar/km/dataset/sspm-politica-ingresos-asignacion-universal-por-hijo-para-proteccion-social-por-embarazo/archivo/sspm_188.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),     
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     dimensions: [
-        {
-          label: "AUH",
-          data: payload,
-          
-        },
-
-      ]
-  }
+      {
+        label: "AUH",
+        data: payload,
+      },
+    ],
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
-
+})();

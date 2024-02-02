@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "turismoreceptivo"
-      const payload = await parsers.datosGobarAPI('322.2_TURISMO_REIVO__17')
+  const kpi = "turismoreceptivo";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/322/distribution/322.2/download/turismo-receptivo-emisivo-aeropuerto-internacional-ezeiza-aeroparque.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Turismo Receptivo",
@@ -13,24 +14,19 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/dataset/sspm_322/archivo/sspm_322.2",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
 
     dimensions: [
-        {
-        
+      {
         label: "Turismo Receptivo",
         data: payload,
         color: "rgba(46,120,210,1)",
-        
-        
-        },
+      },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-   
-
-})()
+})();

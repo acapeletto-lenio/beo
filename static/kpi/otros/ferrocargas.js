@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "ferrocargas"
-      const payload = await parsers.datosGobarAPI('302.3_TRANSP_CAR_KM_0_S_36')
+  const kpi = "ferrocargas";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/302/distribution/302.3/download/estadistincas-servicios-publicos-insumos.csv";
+  const payload = await parsers.datosGobarAPI(0, 36, url);
   const post = {
     kpi,
     t: "Cargas Ferrocarril",
@@ -13,24 +14,19 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/dataset/sspm-estadisticas-servicios-publicos/archivo/sspm_302.3",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
 
     dimensions: [
-        {
-        
+      {
         label: "Cargas Ferrocarril",
         data: payload,
         color: "rgba(46,120,210,1)",
-        
-        
-        },
+      },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-   
-
-})()
+})();
