@@ -1,10 +1,11 @@
- 
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "cereales"
- const payload = await parsers.datosGobarAPI('34.2_GTGIR_0_P_19')
+  const kpi = "cereales";
+
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/34/distribution/34.2/download/indicadores-evolucion-sector-agropecuario-valores-por-campana.csv";
+  const payload = await parsers.datosGobarCSV(0, 10, url);
   const post = {
     kpi,
     t: "Producción de Cereales",
@@ -15,36 +16,33 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/sq/dataset/sspm-indicadores-evolucion-sector-agropecuario/archivo/sspm_34.2",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     max: 80000000,
     dimensions: [
-      { 
+      {
         label: "Girasol",
         data: payload,
         color: "rgba(46,120,210,0.25)",
       },
-      { 
+      {
         label: "Maiz",
-        data: await parsers.datosGobarAPI('34.2_MTMAI_0_P_16'),
+        data: await parsers.datosGobarCSV(0, 12, url),
         color: "rgba(46,120,210,0.25)",
       },
-      { 
+      {
         label: "Trigo",
-        data: await parsers.datosGobarAPI('34.2_TTTRI_0_P_17'),
+        data: await parsers.datosGobarCSV(0, 18, url),
         color: "rgba(46,120,210,0.25)",
-      },                    
+      },
       {
         label: "Soja",
-        data: await parsers.datosGobarAPI('34.2_STSOJ_0_P_16'),
-        
+        data: await parsers.datosGobarCSV(0, 16, url),
       },
     ],
-}
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();

@@ -3,7 +3,7 @@ module.exports = (async function () {
 
   const kpi = "emae";
   const url =
-    " https://infra.datos.gob.ar/catalog/sspm/dataset/143/distribution/143.3/download/emae-valores-anuales-indice-base-2004-mensual.csv";
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/143/distribution/143.3/download/emae-valores-anuales-indice-base-2004-mensual.csv";
   const payload = await parsers.datosGobarCSV(0, 2, url);
   //const payload = await parsers.datosGobarAPI('143.3_NO_PR_2004_A_31')
   /*   a: '11.3_ISOM_2004_M_39',
