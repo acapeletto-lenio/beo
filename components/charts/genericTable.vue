@@ -112,9 +112,9 @@ export default {
       },      
     calculateVariation(dimension, index) {
       if (index < 12) {
-        return ((dimension.data[index].y - dimension.data[index + 1].y) / dimension.data[index + 1].y * 100);
+        return ((dimension.data[index]?.y - dimension.data[index + 1]?.y) / dimension.data[index + 1]?.y * 100);
       } else {
-        return ((dimension.data[index].y - dimension.data[index - 1].y) / dimension.data[index - 1].y * 100);
+        return ((dimension.data[index]?.y - dimension.data[index - 1]?.y) / dimension.data[index - 1]?.y * 100);
       }
     },
     getVariationClass(dimension, index) {
