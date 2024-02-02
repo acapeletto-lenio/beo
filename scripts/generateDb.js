@@ -3,7 +3,6 @@ const glob = require("glob");
 const path = require("path");
 var parsertree = require("tree-parser");
 global.fs = require("fs");
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 function writeFileSyncRecursive(filename, content, charset) {
   const folders = filename.split(path.sep).slice(0, -1);
