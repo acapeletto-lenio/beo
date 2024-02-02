@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "balanza"
-const payload = await parsers.datosGobarAPI('74.3_IIT_0_M_25')
+  const kpi = "balanza";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/74/distribution/74.3/download/intercambio-comercial-argentino-mensual.csv";
+  const payload = await parsers.datosGobarCSV(0, 6, url);
   const post = {
     kpi,
     t: "Intercambio Comercial",
@@ -14,9 +15,9 @@ const payload = await parsers.datosGobarAPI('74.3_IIT_0_M_25')
     fdr: "https://datos.gob.ar/ja/dataset/sspm-intercambio-comercial-argentino/archivo/sspm_74.3",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     feat: true,
     d: "El intercambio comercial argentino (ICA) muestra la evolución de la balanza comercial, la relación entre los ingresos en dólares provenientes de los productos que exporta el país y aquellos artículos que se compran en el exterior.",
     dimensions: [
@@ -24,24 +25,20 @@ const payload = await parsers.datosGobarAPI('74.3_IIT_0_M_25')
         label: "Importaciones",
         data: payload,
         color: "#b22222CC",
-
       },
       {
         label: "Exportaciones",
-        data: await parsers.datosGobarAPI('74.3_IET_0_M_16'),
+        data: await parsers.datosGobarCSV(0, 1, url),
         color: "#009966",
-
       },
       {
         label: "Saldo Comercial",
         type: "bar",
-        data: await parsers.datosGobarAPI('74.3_ISC_0_M_19'),
+        data: await parsers.datosGobarCSV(0, 17, url),
         color: "#ccc",
       },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
+})();

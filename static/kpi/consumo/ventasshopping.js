@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "ventasshopping"
-  const payload = await parsers.datosGobarAPI('458.1_VENTAS_TOTTES_ABRI_M_33_40')
+  const kpi = "ventasshopping";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/458/distribution/458.1/download/ventas-totales-nacionales-centros-compras-valores-mensuales.csv";
+  const payload = await parsers.datosGobarCSV(0, 4, url);
 
   const post = {
     kpi,
@@ -14,31 +15,28 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/ar/dataset/sspm-ventas-centros-compras-nacional/archivo/sspm_458.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
     dimensions: [
-        {
-            label: "Total",
-            data: payload,
-            color: "rgba(46,120,210,1)",
-            },
-        {    
-            label: "GBA",
-            data: await parsers.datosGobarAPI('458.1_VENTAS_GBATES_ABRI_M_29_80'),
-            color: "rgba(46,120,210,0.25)",   
-            },
-        {    
-            label: "Resto",
-            data: await parsers.datosGobarAPI('458.1_VENTAS_RESTES_ABRI_M_31_8'),
-            color: "rgba(46,120,210,0.25)",
-            },
-
+      {
+        label: "Total",
+        data: payload,
+        color: "rgba(46,120,210,1)",
+      },
+      {
+        label: "GBA",
+        data: await parsers.datosGobarCSV(0, 5, url),
+        color: "rgba(46,120,210,0.25)",
+      },
+      {
+        label: "Resto",
+        data: await parsers.datosGobarCSV(0, 6, url),
+        color: "rgba(46,120,210,0.25)",
+      },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-   
-
-})()
+})();

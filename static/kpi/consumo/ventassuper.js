@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "ventassuper"
-    const payload = await parsers.datosGobarAPI('455.1_VENTAS_TOTAGO_0_M_25_99')
+  const kpi = "ventassuper";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/455/distribution/455.1/download/ventas-totales-supermercados-2.csv";
+  const payload = await parsers.datosGobarCSV(0, 6, url);
   const post = {
     kpi,
     t: "Ventas Supermercados",
@@ -13,41 +14,38 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/dataset/sspm_455/archivo/sspm_455.1",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
     dimensions: [
-        {
-            label: "Totales",
-            data: payload,
-            color: "rgba(46,120,210,1)",
-            },
-        {    
-            label: "Efectivo",
-            data: await parsers.datosGobarAPI('455.1_EFECTIVOIVO_0_M_8_15'),
-            color: "rgba(46,120,210,0.25)",   
-            },
-        {    
-            label: "Debito",
-            data: await parsers.datosGobarAPI('455.1_TARJETAS_DITO_0_M_15_92'),
-            color: "rgba(46,120,210,0.25)",   
-            },
-        {   
-            label: "Credito",
-            data: await parsers.datosGobarAPI('455.1_TARJETAS_CITO_0_M_16_85'),
-            color: "rgba(46,120,210,0.25)",   
-            },
-        {    
-            label: "Otros",
-            data: await parsers.datosGobarAPI('455.1_OTROS_MEDIIOS_0_M_12_32'),
-            color: "rgba(46,120,210,0.25)",   
-            },
-
+      {
+        label: "Totales",
+        data: payload,
+        color: "rgba(46,120,210,1)",
+      },
+      {
+        label: "Efectivo",
+        data: await parsers.datosGobarCSV(0, 7, url),
+        color: "rgba(46,120,210,0.25)",
+      },
+      {
+        label: "Debito",
+        data: await parsers.datosGobarCSV(0, 8, url),
+        color: "rgba(46,120,210,0.25)",
+      },
+      {
+        label: "Credito",
+        data: await parsers.datosGobarCSV(0, 9, url),
+        color: "rgba(46,120,210,0.25)",
+      },
+      {
+        label: "Otros",
+        data: await parsers.datosGobarCSV(0, 10, url),
+        color: "rgba(46,120,210,0.25)",
+      },
     ],
-  }
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-   
-
-})()
+})();
