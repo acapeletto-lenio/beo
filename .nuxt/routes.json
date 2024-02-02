@@ -3,28 +3,24 @@
     "name": "index",
     "path": "/",
     "component": "/Users/agustin.capeletto/fed/beo2/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_6fa29425"
+    "chunkName": "pages/index"
   },
   {
     "name": "search-all",
     "path": "/search/*",
     "component": "/Users/agustin.capeletto/fed/beo2/pages/search/_.vue",
-    "chunkName": "pages/search/_",
-    "_name": "_5f96ae96"
+    "chunkName": "pages/search/_"
   },
   {
     "name": "cat",
     "path": "/:cat",
     "component": "/Users/agustin.capeletto/fed/beo2/pages/_cat/index.vue",
-    "chunkName": "pages/_cat/index",
-    "_name": "_29365097"
+    "chunkName": "pages/_cat/index"
   },
   {
     "name": "cat-kpi",
     "path": "/:cat/:kpi",
     "component": "/Users/agustin.capeletto/fed/beo2/pages/_cat/_kpi/index.vue",
-    "chunkName": "pages/_cat/_kpi/index",
-    "_name": "_f2647c9a"
+    "chunkName": "pages/_cat/_kpi/index"
   }
 ]
