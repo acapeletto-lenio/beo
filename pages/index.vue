@@ -1,108 +1,81 @@
 <template>
   <div class="pepeboard">
-    <div v-if="$state.activeMode === 'grid'">
-      <div class="mastersection">
-        <template v-for="(kpi, parent) in $state.savedIndex">
-          <nuxt-link
-            class="mincharto"
-            :to="`kpi/${parent}`"
-            :key="`${$state.updated}-${parent}`"
-            v-if="kpi.feat"
-          >
-            <h2>
-              <strong>{{ kpi.t }}</strong
-              >. {{ kpi.st }}
-            </h2>
-            <charts-genericLine :index="true" :data="parent" />
-          </nuxt-link>
-        </template>
-      </div>
+
+ 
+
+<div v-if="$state.activeMode === 'grid'">
+  
+        <div class="mastersection">
+          <template v-for="(key, parent) in $state.savedIndex">
+             <nuxt-link class="mincharto" :to="`kpi/${parent}`" :key="`${$state.updated}-${parent}`" v-if="key.feat">
+                  <charts-genericLine :index="true" :data="parent" />
+              </nuxt-link> 
+          </template>
+
+        </div>        
+ </div>
+ 
+<div v-if="$state.activeMode === 'table'">
+
+
+<div class="mastertable">
+
+<section>
+  <h2>Indicadores Económicos y Sociales de Argentina</h2>
+  <div>
+
+  <table v-if="`${$state.updated}`">
+    <thead>
+      <tr>
+        <th v-for="(column, index) in tableColumns"
+          :key="index"
+          :class="{'sort-asc': column.field === currentSort && currentSortDir === 'asc', 'sort-desc': column.field === currentSort && currentSortDir === 'desc'}"
+          @click="sortTable(column.field)"
+        >
+          {{ column.label }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(value, key) in $state.savedIndex" :key="key" @click="handleRow(key)">
+        <td><strong>{{ value.t }}</strong>. {{ value.st }}</td>
+        <td>{{ value.fu }}</td>
+        <td>{{ value.fd }}</td>
+        <td>{{ value.frec }}</td>
+        <td>{{ value.ul }}</td>
+        <td>
+          {{ value.u ? Math.round((Date.now() - Date.parse(value.u)) / (24 * 60 * 60 * 1000)) + ' ' + (Math.round((Date.now() - Date.parse(value.u)) / (24 * 60 * 60 * 1000)) === 1 ? 'día' : 'días') : '-' }}
+        </td>  
+      </tr>
+    </tbody>
+  </table>
     </div>
 
-    <div v-if="$state.activeMode === 'table'">
-      <div class="mastertable">
-        <section>
-          <h2>Indicadores Económicos y Sociales de Argentina</h2>
-          <div>
-            <table v-if="`${$state.updated}`">
-              <thead>
-                <tr>
-                  <th
-                    v-for="(column, index) in tableColumns"
-                    :key="index"
-                    :class="{
-                      'sort-asc':
-                        column.field === currentSort &&
-                        currentSortDir === 'asc',
-                      'sort-desc':
-                        column.field === currentSort &&
-                        currentSortDir === 'desc',
-                    }"
-                    @click="sortTable(column.field)"
-                  >
-                    {{ column.label }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(value, key) in $state.savedIndex"
-                  :key="key"
-                  @click="handleRow(key)"
-                >
-                  <td>
-                    <strong>{{ value.t }}</strong
-                    >. {{ value.st }}
-                  </td>
-                  <td>{{ value.fu }}</td>
-                  <td>{{ value.fd }}</td>
-                  <td>{{ value.frec }}</td>
-                  <td>{{ value.ul }}</td>
-                  <td>
-                    {{
-                      value.u
-                        ? Math.round(
-                            (Date.now() - Date.parse(value.u)) /
-                              (24 * 60 * 60 * 1000)
-                          ) +
-                          " " +
-                          (Math.round(
-                            (Date.now() - Date.parse(value.u)) /
-                              (24 * 60 * 60 * 1000)
-                          ) === 1
-                            ? "día"
-                            : "días")
-                        : "-"
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </div>
+</section>
+           </div>
+ </div>
+
   </div>
 </template>
 
 <script>
-import megatable from "~/static/kpitable.json";
+import megatable from '~/static/kpitable.json'
 
 export default {
   name: "IndexPage",
   data() {
     return {
-      items: megatable,
-      currentSort: "u", // By default, sort by the 'ul' property
-      currentSortDir: "desc", // By default, sort in descending order
-      tableColumns: [
-        { label: "Indicador", field: "t" },
-        { label: "Fuente", field: "fu" },
-        { label: "Método", field: "fd" },
-        { label: "Frecuencia", field: "frec" },
-        { label: "Último Dato", field: "ul" },
-        { label: "Actualizado", field: "u" },
-      ],
+      items: megatable,   
+    currentSort: 'u', // By default, sort by the 'ul' property
+    currentSortDir: 'desc', // By default, sort in descending order    
+          tableColumns: [
+        { label: 'Indicador', field: 't' },
+        { label: 'Fuente', field: 'fu' },
+        { label: 'Método', field: 'fd' },
+        { label: 'Frecuencia', field: 'frec' },
+        { label: 'Último Dato', field: 'ul' },
+        { label: 'Actualizado', field: 'u' },
+      ],     
 
       savedCells: {
         1213: {
@@ -170,24 +143,21 @@ export default {
   },
   methods: {
     findRootParent(searchItem) {
-      for (let key in this.items) {
-        if (
-          this.items.hasOwnProperty(key) &&
-          Array.isArray(this.items[key]["_contents"])
-        ) {
-          if (this.items[key]["_contents"].includes(`${searchItem}.js`)) {
-            return key;
-          }
-        }
+  for (let key in this.items) {
+    if (this.items.hasOwnProperty(key) && Array.isArray(this.items[key]['_contents'])) {
+      if (this.items[key]['_contents'].includes(`${searchItem}.js`)) {
+        return key;
       }
-      return null;
-    },
+    }
+  }
+  return null;
+},
     getSortedItems(resort) {
       // Convert the items object to an array
-      if (resort === "original") {
+      if (resort === 'original') {
         var itemsArray = Object.values(this.$state.savedIndex);
       }
-      if (resort === "results") {
+      if (resort === 'results') {
         var itemsArray = Object.values(this.$state.searchedResults);
       }
       //console.log(itemsArray)
@@ -196,7 +166,7 @@ export default {
         const aValue = a[this.currentSort];
         const bValue = b[this.currentSort];
 
-        if (this.currentSortDir === "asc") {
+        if (this.currentSortDir === 'asc') {
           return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
         } else {
           return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
@@ -204,43 +174,46 @@ export default {
       });
     },
     handleRow(pepe) {
-      var searchTermParent = this.findRootParent(pepe);
-      this.$router.push({ path: `/${searchTermParent}/${pepe}` });
-    },
+      var searchTermParent = this.findRootParent(pepe)
+      this.$router.push({ path: `/${searchTermParent}/${pepe}` })
+  
+    },    
     sortTable(column) {
       if (column === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
       } else {
-        this.currentSortDir = "asc";
+        this.currentSortDir = 'asc';
         this.currentSort = column;
       }
     },
   },
+ 
 };
 </script>
 
 <style lang="scss">
+
 .pepeboard {
-  h1 {
-    color: #d3d3d3;
+ h1 {
+    color: #D3D3D3;
     font-size: 22px;
     margin-top: 0;
     margin-bottom: 10px;
     font-weight: normal;
     //font-family: "montserrat"
-  }
-  h1 + p {
+}
+h1 + p {
     color: #999;
     margin-bottom: 15px;
     strong {
-      color: #999;
+          color: #999;
+
     }
-  }
+}
 }
 .mastersection {
   display: flex;
   gap: 15px;
-  padding-top: 5px;
   //border-bottom: 1px solid #333;
   //padding-bottom: 20px;
   flex-wrap: wrap;
@@ -249,68 +222,46 @@ export default {
   }
   > * {
     flex: 1;
-    min-width: calc(50% - 10px);
-    max-width: calc(50% - 10px);
+        min-width: calc(50% - 10px);
+                max-width: calc(50% - 10px);
+
   }
 }
 .pepeboard {
-  //max-width: 1190px;
+  //max-width: 1366px;
   margin: 0;
+  
 }
 .pepeboard > a {
-  color: #d3d3d3;
+  color: #D3D3D3;
   margin-top: 0;
   padding-top: 20px;
   font-weight: normal;
   margin-bottom: 15px;
   font-size: 18px;
   display: block;
-  &:first-of-type {
-    padding-top: 0;
-  }
+  &:first-of-type { padding-top: 0; }
   &:hover {
     text-decoration: underline;
   }
 }
 .mincharto {
   position: relative;
-  flex: 0 0 calc(100% - 10px);
-
+        max-width: calc(50% - 10px);
+        min-width: calc(50% - 10px);
+  min-height: 400px;
+  max-height: 420px;
   background: #fff;
   padding: 20px;
-  padding-bottom: 15px;
   border-radius: 6px;
   //margin-bottom: 15px;
   text-decoration: none;
+  display: block;
   overflow: hidden;
-  height: 465px;
-  display: flex;
-  gap: 20px;
-  flex-direction: column;
-  > h2 {
-    //border-bottom: 1px solid #eee;
-    //padding-bottom: 15px;
-    display: flex;
-    img {
-      width: 20px;
-      margin-right: 5px;
-    }
-  }
-  h3 {
-    font-size: 16px;
-  }
-  .card-sidebar-container {
-    display: flex;
-    gap: 20px;
-    height: 100%;
-    > * {
-      flex: 1;
-      &:first-child {
-        flex: 0 0 320px;
-        padding-right: 20px;
-        border-right: 1px solid #eee;
-      }
-    }
+  &.mega {
+    width: 100%;
+  min-height: 465px;
+  max-height: 465px;    
   }
   @media only screen and (max-width: 980px) {
     min-width: 100% !important;
@@ -330,7 +281,7 @@ export default {
 .rewelcome {
   border: 1px solid #333;
   border-radius: 2px;
-  color: #d3d3d3;
+  color: #D3D3D3;
   padding: 15px;
   font-size: 16px;
   position: relative;
@@ -339,11 +290,11 @@ export default {
   background: #000;
   strong,
   p {
-    color: #d3d3d3;
+    color: #D3D3D3;
     margin: 0;
   }
   h1 {
-    color: #d3d3d3;
+    color: #D3D3D3;
     margin: 0;
     margin-bottom: 10px;
     font-weight: normal;
@@ -364,23 +315,25 @@ export default {
   border-radius: 6px;
   padding: 20px;
   h2 {
-    border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #eee;
     //margin-bottom: 15px;
     padding-bottom: 15px !important;
+    
   }
   table {
     width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse;
+    border-spacing: 0; border-collapse: collapse;
+
+  
   }
-  th,
-  td {
+  th,td {
     padding: 10px 15px;
     border-bottom: 1px solid #eee;
     text-align: left;
-    &:nth-child(2) {
+     &:nth-child(2) {
       max-width: 200px;
     }
+
   }
   tr:not(:only-child) {
     cursor: pointer;
@@ -434,42 +387,21 @@ export default {
 
 .mastertable thead th.sort-asc::after {
   border-width: 4px 4px 0 4px;
-  border-color: #999 transparent transparent transparent;
+  border-color: #888 transparent transparent transparent;
 }
 
 .mastertable thead th.sort-desc::after {
   border-width: 0 4px 4px 4px;
-  border-color: transparent transparent #999 transparent;
+  border-color: transparent transparent #888 transparent;
 }
 
 .pepecell {
   padding: 20px;
-  background: #1c1c1c;
+  background: #1C1C1C;
   border-radius: 6px;
   margin-bottom: 10px;
   p {
     margin-bottom: 0 !important;
-  }
-}
-
-.numbers-container {
-  display: flex;
-  flex-direction: column;
-  > * {
-    flex: 1;
-  }
-  h3,
-  p {
-    margin: 0;
-    text-transform: capitalize;
-  }
-}
-
-.scorecard {
-  margin-bottom: 10px;
-  p {
-    margin: 0;
-    color: #999;
   }
 }
 </style>

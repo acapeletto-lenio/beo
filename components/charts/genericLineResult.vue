@@ -433,8 +433,8 @@ export default {
     fill: rgba(46,120,210,0.05);
   }
   text { 
-    color: #999;   
-    fill: #999; 
+    color: #aaa;   
+    fill: #aaa; 
     font-size: 15px;
   }
   line{
@@ -458,7 +458,7 @@ export default {
     align-items:center;
     max-width: max-content;
     font-size: 12px;
-    color: #999;
+    color: #888;
     .circle {
       display: inline-block;
       width: 12px;
@@ -495,7 +495,7 @@ export default {
     font-style: normal;
     font-size: 14px;
     text-transform: capitalize;
-    color: #999;
+    color: #aaa;
   }
   .innerflexer {
     display: flex;
@@ -505,7 +505,7 @@ export default {
     @media only screen and (max-width: 980px) {
       flex-wrap: wrap;
     }       
-    > * { flex: 1; color: #999; border-radius: 1px; }
+    > * { flex: 1; color: #aaa; border-radius: 1px; }
     .subinnerflexer {
       display: flex;
       align-items: center;
@@ -524,7 +524,7 @@ export default {
     max-width: max-content;
     user-select: none;
     cursor: pointer;
-    &.active { background: #eee;color:#999 }
+    &.active { background: #eee;color:#888 }
     @media only screen and (max-width: 980px) {
       max-width: 100%;
       text-align: center;
@@ -556,7 +556,7 @@ export default {
 
     }
     i {
-      color: #999;
+      color: #aaa;
       font-style: normal;
       line-height: 0;
     }
@@ -571,7 +571,7 @@ export default {
     &[disabled] {
       opacity: 0.5;
       pointer-events: none;
-      color: #999;
+      color: #aaa;
     }
     &:hover {
       background: #f5f5f5;

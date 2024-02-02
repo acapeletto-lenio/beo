@@ -213,7 +213,7 @@ h5 {
         &:last-of-type { margin-right: 0; }
       }
       svg {
-        fill: #999;
+        fill: #888;
         width: 18px;
         height: auto;
       }

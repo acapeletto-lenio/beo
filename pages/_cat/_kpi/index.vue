@@ -127,8 +127,8 @@ export default {
     svg {
       width: 24px;
       height: auto;
-      fill: #999;
-      stroke: #999;
+      fill: #888;
+      stroke: #888;
     }
   }
 }

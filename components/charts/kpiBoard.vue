@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--      <div v-if="edit" class="dashtitle" style="display:none">
+<!--      <div v-if="edit" class="dashtitle" style="display:none">
       <h2>Dashboard <span>Builder</span></h2>
       <div style="display:flex;">
       <button @click="clearBoard(savedCells)">Reset <span>↻</span></button>
@@ -164,31 +164,21 @@
                   name="kpis"
                   id="cars"
                 >
-                  <option
-                    :selected="i === 'Todos'"
-                    :key="i"
-                    v-for="(parentOption, i) in kpeis"
-                    :value="i"
-                  >
-                    {{ i }}
-                  </option>
+          
+ 
+                  <option :selected="i === 'Todos'" :key="i" v-for="(parentOption, i) in kpeis" :value="i">{{i}}</option>
+ 
                 </select>
                 <select
                   required
                   @change="$set(savedCells[parent], 'kpi', $event.target.value)"
                   name="kp11is"
                   id="car33s"
-                  multiple="multiple"
-                  style="height: 135px"
+                                    multiple="multiple"
+                  style="height:135px"
                 >
-                  <option
-                    :selected="kpiOption.kpi === 'emae'"
-                    :key="u"
-                    v-for="(kpiOption, u) in kpeis[selectedCat]"
-                    :value="kpiOption.kpi"
-                  >
-                    {{ kpiOption.t }}
-                  </option>
+        
+                  <option :selected="kpiOption.kpi === 'emae'" :key="u" v-for="(kpiOption, u) in kpeis[selectedCat]" :value="kpiOption.kpi">{{kpiOption.t}}</option>
                 </select>
               </div>
             </div>
@@ -242,7 +232,7 @@
           :subtitle="item.subtitle"
           :key="`chart-${item.kpi}`"
         />
-        <!--         <component
+<!--         <component
           v-if="item.hasChart && edit"
           edit
           :is="`charts-generic${item.type}`"
@@ -250,6 +240,7 @@
         /> -->
       </section>
     </div>
+ 
   </div>
 </template>
 
@@ -270,7 +261,7 @@ export default {
     return {
       columnAmount: 8,
       kpeis: require(`~/static/kpis.json`),
-      selectedCat: "Todos",
+      selectedCat: 'Todos',
       dragging: false,
       saredUrl: false,
       modalOpen: "",
@@ -284,7 +275,7 @@ export default {
   created() {
     this.savedCells = this.data;
 
-    this.boardID = this.$route.path;
+          this.boardID = this.$route.path;
 
     //console.log(this.kpeis)
     //console.log(this.savedCells)
@@ -292,15 +283,16 @@ export default {
 
   methods: {
     async saveDB() {
-      var uiui = this.uniqueId();
-      await this.$supabase
-        .from("data")
-        .insert({ url: uiui, object: this.savedCells });
-      this.boardID = uiui;
+      var uiui = this.uniqueId()
+      await this.$supabase.from("data").insert({ url: uiui, object: this.savedCells });
+      this.boardID =uiui
 
-      this.$router.replace({ path: uiui });
 
-      //history.pushState({},null,`${this.$route.path.replace("/","")}/${uiui}`)
+       
+      this.$router.replace({path: uiui});
+
+       //history.pushState({},null,`${this.$route.path.replace("/","")}/${uiui}`)
+
     },
     uniqueId() {
       var idStrLen = 6;
@@ -310,16 +302,16 @@ export default {
       } while (idStr.length < idStrLen);
       return idStr;
     },
-
+ 
     clearBoard(cells) {
       for (let cell in cells) {
         this.$delete(this.savedCells, cell);
       }
       this.boardID = "";
-      this.$router.replace({ path: "" });
+      this.$router.replace({path: ''});
     },
     saveChart(parent) {
-      console.log(this.savedCells[parent]);
+      console.log(this.savedCells[parent])
       this.$set(this.savedCells[parent], "hasChart", true);
       this.modalOpen = false;
       //console.log(this.savedCells);
@@ -489,13 +481,14 @@ export default {
   //  border-left: 1px dashed #444;
   // border-top: 1px dashed #444;
   margin: 0px 0 0 0;
-  max-width: 1380px;
+  max-width: 1366px;
   margin: 0 auto;
   @media only screen and (max-width: 980px) {
     display: block;
     border: 0;
     margin-top: 0;
-  }
+
+  }  
   > i {
     //  border-right: 1px dashed #444;
     //  border-bottom: 1px dashed #444;
@@ -504,7 +497,8 @@ export default {
     cursor: pointer;
     @media only screen and (max-width: 980px) {
       display: none;
-    }
+
+    }      
     &.active {
       pointer-events: all;
     }
@@ -539,7 +533,7 @@ export default {
     //margin-bottom: 1px;
     //margin-right: 1px;
     overflow: hidden;
-
+ 
     @media only screen and (max-width: 980px) {
       position: relative;
       float: left;
@@ -547,7 +541,7 @@ export default {
       border-radius: 0;
       margin-bottom: 10px;
       padding: 20px 15px;
-    }
+    }      
     a {
       //text-decoration: none;
     }
@@ -601,7 +595,7 @@ export default {
     font-weight: 400;
     font-family: Helvetica, Arial, sans-serif;
     font-weight: lighter;
-    color: #999;
+    color: #888;
   }
   .backdropper {
     display: none;
@@ -659,7 +653,7 @@ export default {
         display: block;
         font-weight: lighter;
         padding-top: 5px;
-        color: #999;
+        color: #888;
       }
     }
   }
@@ -707,7 +701,7 @@ select option[value=""] {
   margin: 15px 0 15px;
   display: flex;
   justify-content: space-between;
-  /*   position: fixed;
+/*   position: fixed;
   z-index: 9999;
   right: 0;
   top: 0;

@@ -211,7 +211,7 @@ h1 + p {
   }
 }
 .pepeboard {
-  //max-width: 1190px;
+  //max-width: 1366px;
   margin: 0;
   
 }
@@ -373,12 +373,12 @@ h1 + p {
 
 .mastertable thead th.sort-asc::after {
   border-width: 4px 4px 0 4px;
-  border-color: #999 transparent transparent transparent;
+  border-color: #888 transparent transparent transparent;
 }
 
 .mastertable thead th.sort-desc::after {
   border-width: 0 4px 4px 4px;
-  border-color: transparent transparent #999 transparent;
+  border-color: transparent transparent #888 transparent;
 }
 
 .pepecell {

@@ -219,7 +219,7 @@ display: flex;
     }
   span {
       transform: rotate(180deg);
-    color: #999;
+    color: #888;
         font-family: Helvetica, Arial, sans-serif;
     font-weight: lighter;
     font-size: 14px;
@@ -231,7 +231,7 @@ display: flex;
   top: 22px;
   right: 20px;
   border-radius: 100px;
-   color: #999;
+   color: #aaa;
    text-transform: capitalize;
   font-size: 14px;
 }

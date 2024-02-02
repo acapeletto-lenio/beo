@@ -9,7 +9,7 @@ var state = {
   kpidates: {
     balanza: "2004-06-01",
     deficit: "2018-12-01",
-    ipc: "2004-12-01",
+    //ipc: "2004-12-01",
     cambio: "2018-12-01",
     //salariominimo: "2004-12-01",
     haberminimo: "2004-12-01",
@@ -78,7 +78,7 @@ var state = {
           scaleLabel: {
             display: false,
             labelString: "Millones de dólares",
-            fontColor: "#999",
+            fontColor: "#888",
           },
           position: "right",
           //align: "center",

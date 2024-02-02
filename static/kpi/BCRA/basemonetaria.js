@@ -58,7 +58,7 @@ module.exports = (async function() {
           
         },
         {
-    label: "Base Monetaria Ampliada",
+    label: "Base Monetaria + Instrumentos (LELIQ y Otros)",
           data: payload.leliq,
           color: "#2E78D280",
         },

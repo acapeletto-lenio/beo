@@ -117,7 +117,7 @@ console.log(this.chart.chartdata.labels)
     font-family: Helvetica, Arial, sans-serif;
     font-weight: lighter;
     font-size: 13px;
-    color: #999;
+    color: #888;
     height: max-content !important;
   }
   > div {
