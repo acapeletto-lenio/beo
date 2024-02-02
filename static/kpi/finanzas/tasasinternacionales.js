@@ -11,7 +11,7 @@ module.exports = (async function () {
   const inglaterra = await parsers.datosGobarCSV(0, 4, url);
   const japon = await parsers.datosGobarCSV(0, 5, url);
 
-  const reambito = {
+  /*   const reambito = {
     fed: "131.1_FET_0_0_12&start_date=1999-01-01",
     euro: "131.1_MZT_0_0_18&start_date=1999-01-01",
     brasil: "131.1_SBT_0_0_17&start_date=1999-01-01",
@@ -55,7 +55,7 @@ module.exports = (async function () {
     for (let i = 0; i < payload[chosenOne].length; i++) {
       payload[key][i].x = payload[chosenOne][i].x;
     }
-  }
+  } */
 
   const post = {
     kpi,
