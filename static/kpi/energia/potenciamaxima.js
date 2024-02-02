@@ -1,9 +1,10 @@
 module.exports = (async function () {
-
   const parsers = require("@parsers");
 
-  const kpi = "potenciamaxima"
-  const payload = await parsers.datosGobarAPI('367.3_POTENCIA_MIMA__15')
+  const kpi = "potenciamaxima";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/367/distribution/367.3/download/demanda-de-electricidad-datos-mensuales.csv";
+  const payload = await parsers.datosGobarCSV(0, 6, url);
   const post = {
     kpi,
     t: "Potencia Maxima",
@@ -14,21 +15,17 @@ module.exports = (async function () {
     fdr: "https://datos.gob.ar/ar/dataset/sspm-demanda-electricidad/archivo/sspm_367.3?view_id=57a59dd2-3be4-42c3-9093-a9e8791f5e09",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "",
     dimensions: [
-        {
-          label: "Potencia Electrica Maxima",
-          data: payload,
-          
-        },
-      ]
-  }
+      {
+        label: "Potencia Electrica Maxima",
+        data: payload,
+      },
+    ],
+  };
 
   parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
-
+})();

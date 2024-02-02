@@ -1,9 +1,10 @@
-module.exports = (async function() {
-
+module.exports = (async function () {
   const parsers = require("@parsers");
 
-  const kpi = "tributarios"
- const payload = await parsers.datosGobarAPI('172.3_TL_RECAION_M_0_0_17')
+  const kpi = "tributarios";
+  const url =
+    "https://infra.datos.gob.ar/catalog/sspm/dataset/172/distribution/172.3/download/recaudacion-tributaria-datos-mensuales.csv";
+  const payload = await parsers.datosGobarCSV(0, 1, url);
   const post = {
     kpi,
     t: "Ingresos Tributarios",
@@ -14,38 +15,32 @@ module.exports = (async function() {
     fdr: "https://datos.gob.ar/sv/dataset/sspm-principales-subgrupos-recaudacion-tributaria/archivo/sspm_172.3",
     fu: "MECON",
     fur: "https://www.argentina.gob.ar/economia/politicaeconomica/macroeconomica",
-      frec: parsers.detectDataType(payload), 
-      fruc: parsers.detectAggregationFunction(payload),
-    u: new Date().toLocaleDateString('en-CA').split('/').join('-'),  
+    frec: parsers.detectDataType(payload),
+    fruc: parsers.detectAggregationFunction(payload),
+    u: new Date().toLocaleDateString("en-CA").split("/").join("-"),
     d: "El Estimador mensual de actividad económica (EMAE) refleja la evolución mensual de la actividad económica del conjunto de los sectores productivos a nivel nacional. Este indicador permite anticipar las tasas de variación del producto interno bruto (PIB) trimestral.",
     dimensions: [
       {
         label: "Total",
         data: payload,
-        
-
       },
       {
         label: "DGA",
-        data: await parsers.datosGobarAPI('172.3_SOTAL_DDGA_M_0_0_12'),
+        data: await parsers.datosGobarCSV(0, 3, url),
         color: "#7a49a580",
-
       },
       {
         label: "DGI",
-        data: await parsers.datosGobarAPI('172.3_SOTAL_DDGI_M_0_0_12'),
+        data: await parsers.datosGobarCSV(0, 2, url),
         color: "rgba(46,120,210,0.25)",
-
       },
       {
         label: "Seguridad Social",
-        data: await parsers.datosGobarAPI('172.3_SRIDAD_IAL_M_0_0_16'),
+        data: await parsers.datosGobarCSV(0, 4, url),
         color: "rgba(46,120,210,0.25)",
       },
-]
-}
+    ],
+  };
 
-parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
-
-
-})()
+  parsers.writeFileSyncRecursive(`./static/data/${kpi}.json`, post);
+})();
